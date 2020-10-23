@@ -21,21 +21,33 @@ public class MyReceiver {
 		try{
 			
 			ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContextJMS.xml");
+
 			QueueConnectionFactory factory = (QueueConnectionFactory) applicationContext.getBean("connectionFactory");
 			
 			Queue queue = (Queue) applicationContext.getBean("queue");
+
+			QueueConnection connection = factory.createQueueConnection();
+			QueueSession session = connection.createQueueSession(false, Session.AUTO_ACKNOWLEDGE);
+			QueueReceiver receiver = session.createReceiver(queue);
+
+
+			connection.start();
+
+
+			Message m = receiver.receive();
+			System.out.println("the message is : " + m);
+
+
+
+			session.close();
+			connection.close();
+
 			
 			// Create a connection. See https://docs.oracle.com/javaee/7/api/javax/jms/package-summary.html
-			QueueConnection connection = factory.createQueueConnection();
 			// Open a session
-			QueueSession session = connection.createQueueSession(true, Session.AUTO_ACKNOWLEDGE);
 			// start the connection
-			connection.start();
 			// Create a receive
-			QueueReceiver receiver = session.createReceiver(queue);
 			// Receive the message
-			Message m = receiver.receive();
-			System.out.println(m);
 
 		}catch(Exception e){
 			e.printStackTrace();

@@ -15,13 +15,13 @@ http://www.springframework.org/schema/aop/spring-aop.xsd">
 	<!-- QUEUE -->
 	
 	<bean id="queue" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="test_queue"/>
+		<constructor-arg value="TestQueue"/>
 	</bean>	
 	
 	<!-- TOPIC -->
 	
 	<bean id="topic" class="org.apache.activemq.command.ActiveMQTopic">
-		<constructor-arg value="test_topic"/>
+		<constructor-arg value="TestTopic"/>
 	</bean>
 	
 </beans>
